@@ -56,8 +56,8 @@
                         <div class="col mb-4">
                             <div class="card">
                                 <div class="text-center">
-                                    <img src="../<?= $item['image']; ?>" class="card-img-top img-fluid" alt="..."
-                                        style="width: 200px; height: 200px; object-fit: contain;">
+                                <img src="../<?= !empty($item['image']) ? $item['image'] : 'assets/uploads/products/default.png' ?>" class="card-img-top img-fluid" alt="..." style="width: 200px; height: 200px; object-fit: contain;">
+
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title"><?= $item['name']; ?></h5>

@@ -60,13 +60,13 @@ $(document).ready(function(){
         // console.log('proceedToPlace');
 
         var cphone = $('#cphone').val();
-        var money = $('#money').val();
+        // var money = $('#money').val();
         var payment_mode = $('#payment_mode').val();
 
-        if(money == ''){
-            swal("Masukkan Nominal Bayar","Masukkan Nominal Yang Benar","warning");
-            return false;
-        }
+        // if(money == ''){
+        //     swal("","Masukkan Nominal Yang Benar","warning");
+        //     return false;
+        // }
 
         if(payment_mode == ''){
             swal("Pilih Metode Pembayaran","Pilih Metode Pembayaran Kamu","warning");
@@ -75,7 +75,6 @@ $(document).ready(function(){
         }
 
         // if(cphone == '' && !$.isNumeric(cphone)){
-
         //     swal("Masukkan Nomor Telepon","Masukkan Nomor Telepon Yang Benar","warning");
         //     return false;
 

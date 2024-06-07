@@ -13,7 +13,10 @@ if(is_numeric($paraResult)){
         $response = delete('products', $productId);
         if($response){
             $deleteImage = "../".$product['data']['image'];
-            if(file_exists($deleteImage)){
+            $defaultImage = null; // Path gambar default
+
+            // Cek apakah gambar yang akan dihapus bukan gambar default
+            if(file_exists($deleteImage) && $deleteImage !== $defaultImage){
                 unlink($deleteImage);
             }
             redirect('products.php', 'Produk berhasil dihapus!');

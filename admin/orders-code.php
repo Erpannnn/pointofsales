@@ -146,11 +146,19 @@ if (isset($_POST['productIncDec'])) {
 // Tutor 15
 
 if (isset($_POST['proceedToPlaceBtn'])) {
-    $money = validate($_POST['money']);
+
     $payment_mode = validate($_POST['payment_mode']);
+    if ($payment_mode = "Bayar Online") {
+        $money = $_POST['money'];
+    }
+
+    if ($payment_mode = "Uang Tunai") {
+        $money = validate($_POST['money']);
+    }
+    
 
     // Pastikan bahwa jumlah uang dan mode pembayaran ada
-    if (!empty($money) && !empty($payment_mode)) {
+    if (!empty($payment_mode)) {
         $_SESSION['invoice_no'] = "INV-" . rand(111111, 999999);
         $_SESSION['money'] = $money;
         $_SESSION['payment_mode'] = $payment_mode;
@@ -166,7 +174,7 @@ if (isset($_POST['saveCustomerBtn'])) {
 
     $name = validate($_POST['name']);
     $class = validate($_POST['class']);
-    $phone = validate($_POST['phone']);
+    // $phone = validate($_POST['phone']);
     $email = validate($_POST['email']);
 
     if ($name !== '' && $phone !== '') {
@@ -174,7 +182,7 @@ if (isset($_POST['saveCustomerBtn'])) {
         $data = [
             'name' => $name,
             'class' => $class,
-            'phone' => $phone,
+            // 'phone' => $phone,
             'email' => $email
         ];
         $result = insert('customers', $data);
@@ -195,8 +203,9 @@ if (isset($_POST['saveCustomerBtn'])) {
 if (isset($_POST['saveOrder'])) {
     $invoice_No = validate($_SESSION['invoice_no']);
     $payment_mode = validate($_SESSION['payment_mode']);
-    $money = validate($_SESSION['money']);
+    $money = $_SESSION['money'];
     $order_placed_by_id = $_SESSION['loggedInUser']['user_id'];
+    $snapToken = $_SESSION['snapToken'];
 
     // Periksa apakah ada item produk yang akan dipesan
     if (!isset($_SESSION['productItems']) || empty($_SESSION['productItems'])) {
@@ -222,7 +231,8 @@ if (isset($_POST['saveOrder'])) {
         'order_date' => date('Y-m-d'),
         'order_status' => 'Dipesan',
         'payment_mode' => $payment_mode,
-        'order_placed_by_id' => $order_placed_by_id
+        'order_placed_by_id' => $order_placed_by_id,
+        'snapToken' => $snapToken
     ];
 
     // Simpan pesanan
@@ -261,7 +271,7 @@ if (isset($_POST['saveOrder'])) {
     // Bersihkan sesi setelah pesanan berhasil
     unset($_SESSION['productItemIds']);
     unset($_SESSION['productItems']);
-    unset($_SESSION['money']);
+    $_SESSION['money'];
     unset($_SESSION['payment_mode']);
     unset($_SESSION['invoice_no']);
 
@@ -272,6 +282,8 @@ if (isset($_POST['saveOrder'])) {
         jsonResponse(500, 'error', 'Ada sesuatu yang salah saat menyimpan pesanan');
     }
 }
+
+
 
 
 
